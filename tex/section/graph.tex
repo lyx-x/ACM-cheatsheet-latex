@@ -36,3 +36,69 @@ void euler(int u) {
     }
 }
 \end{lstlisting}
+\subsection{Prime}
+\begin{lstlisting}
+/*input:a matrix of graph g
+output:the cost of the min-covered-tree*/
+void prime(){
+    added[0]=true;
+    int next_vertex;
+    //we have n-1 vertexs to add
+    int total_cost = 0;
+    for (int i=1;i<n;i++){
+        next_vertex=1;
+        int min_cost;
+        //find next vertex to be added
+        for (int j=0;j<n;j++){
+            if (!added[j] && distance_to_tree[j]<distance_to_tree[min]){
+                next_vertex=j;
+                min_cost = distance_to_tree[j];
+            }
+        }
+        //add the new edge to the tree
+        edge[i] = Edge(closed_vertex[next_vertex],next_vertex);
+        total_cost += min_cost; 
+        distance_to_tree[next_vertex] = Max_INT;
+        for (int j=0;j<n;j++){
+            if (!added[j] && g[next_vertex][j]<distance_to_tree[j]){
+                distance_to_tree[j]=g[next_vertex][j];
+                closed_vertex[j] = next_vertex;
+            }
+        }
+
+    }
+}
+\end{lstlisting}
+\subsection{Kruskal}
+\subsection{Dijkstra}
+\subsection{Bellman-For}
+\begin{lstlisting}
+/*input: matrix of the graph,origin and end
+output: the shortest path from origin to end*/
+bool Bellman_Ford()  
+{  
+    for(int i = 1; i <= nodenum; ++i)  
+        dis[i] = (i == original ? 0 : MAX);  
+    for(int i = 1; i <= nodenum - 1; ++i)  
+        for(int j = 1; j <= edgenum; ++j)  
+            if(dis[edge[j].v] > dis[edge[j].u] + edge[j].cost)  
+            {  
+                dis[edge[j].v] = dis[edge[j].u] + edge[j].cost;  
+                pre[edge[j].v] = edge[j].u;  
+            }  
+    bool flag = 1; 
+    //if there is a negative circuit
+    for(int i = 1; i <= edgenum; ++i)  
+        if(dis[edge[i].v] > dis[edge[i].u] + edge[i].cost)  
+        {  
+            flag = 0;  
+            break;  
+        }  
+    return flag;  
+}
+\end{lstlisting}
+\subsection{A*}
+\subsection{Topological sort}
+\subsection{Hungary}
+\subsection{Strong connected component}
+\subsection{Min tree graph}
