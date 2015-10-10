@@ -1,10 +1,19 @@
 \documentclass[11pt, a4paper]{article}
 
 \usepackage[top=1.2in, bottom=1.5in, left=1.25in, right=1.25in]{geometry}
+\usepackage{listings}
+\usepackage{xcolor}
+\lstset { %
+    language=C++,
+    backgroundcolor=\color{black!5}, % set backgroundcolor
+    basicstyle=\footnotesize,% basic font setting
+}
 
 \begin{document}
 
 \tableofcontents
 \include{section/graph}
-
+\include{section/string}
+\include{section/flot}
+\include{section/tree}
 \end{document}
