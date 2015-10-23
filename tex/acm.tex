@@ -1,12 +1,29 @@
 \documentclass[11pt, a4paper]{article}
 
-\usepackage[top=1.2in, bottom=1.5in, left=1.25in, right=1.25in]{geometry}
+\usepackage[top=0.8in, bottom=0.8in, left=0.8in, right=0.8in]{geometry}
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks,
+    citecolor=black,
+    filecolor=black,
+    linkcolor=black,
+    urlcolor=black
+}
+
 \usepackage{listings}
+\usepackage{pxfonts}
 \usepackage{xcolor}
+
 \lstset { %
     language=C++,
-    backgroundcolor=\color{black!5}, % set backgroundcolor
-    basicstyle=\footnotesize,% basic font setting
+    basicstyle=\ttfamily,
+    keywordstyle=\color[rgb]{0.55,0,0.55}\bfseries,
+    stringstyle=\color{red},
+    commentstyle=\color[rgb]{0,0.4,0},
+    morekeywords={include, printf, scanf, define, cin, cout, memset},
+    emph={string, queue},
+    emphstyle={\color[rgb]{0.2,0.5,0.2}}
 }
 
 \begin{document}
@@ -18,4 +35,5 @@
 \include{section/tree}
 \include{section/maths}
 \include{section/geometry}
+
 \end{document}
