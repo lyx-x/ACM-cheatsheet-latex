@@ -2,134 +2,14 @@
 \section{Graph}
 
 \subsection{Eulerian Circuit}
-\begin{lstlisting}
-/*input: line of x,y,z: vertex x and y connected by edge z
-  output: edges that should be visited*/
-struct graph_t {
-    int nv; //nomber of vertex
-    int ne; //nomber of edge
-    int matrix[MAX_NV][MAX_NE];
-};
-graph_t G;
-bool visited[MAX_NE];
-//the degree of each vertex
-int degree[MAX_NV];    
-//stack for output
-stack<int> s;
-
-void euler(int u) {
-    bool flag = true;
-    for (int i = 1; i <= G.nv; i++) {
-        //if the degree is odd then there is no circuit
-        if (degree[i] & 1) {
-            flag = false;
-            break;
-        }
-    }
-    if (!flag)
-    	return;    
-    for (int e = 1; e <= G.ne; e++) {
-    	//if an adjacent edge is not visited
-        if (!visited[e] && G.matrix[u][e]) {
-            visited[e] = true;
-            euler(G.matrix[u][e]);
-            s.push(e);
-        }
-    }
-}
-\end{lstlisting}
+\lstinputlisting{../code/eulerian_circuit.cpp}
 
 \subsection{Prime}
-\begin{lstlisting}
-/*input:a matrix of graph g
-output:the cost of the min-covered-tree*/
-void prime(){
-    added[0]=true;
-    int next_vertex;
-    //we have n-1 vertexs to add
-    int total_cost = 0;
-    for (int i=1;i<n;i++){
-        next_vertex=1;
-        int min_cost;
-        //find next vertex to be added
-        for (int j=0;j<n;j++){
-            if (!added[j] && distance_to_tree[j]<distance_to_tree[min]){
-                next_vertex=j;
-                min_cost = distance_to_tree[j];
-            }
-        }
-        //add the new edge to the tree
-        edge[i] = Edge(closed_vertex[next_vertex],next_vertex);
-        total_cost += min_cost; 
-        distance_to_tree[next_vertex] = Max_INT;
-        for (int j=0;j<n;j++){
-            if (!added[j] && g[next_vertex][j]<distance_to_tree[j]){
-                distance_to_tree[j]=g[next_vertex][j];
-                closed_vertex[j] = next_vertex;
-            }
-        }
-
-    }
-}
-\end{lstlisting}
+\lstinputlisting{../code/prime.cpp}
 
 \subsection{Kruskal}
 
-\begin{lstlisting}
-struct CEdge  
-{  
-    int u;  
-    int v;  
-    int weight;  
-  
-    CEdge(){}  
-    CEdge(int u,int v,int w):u(u),v(v),weight(w){}  
-};  
-  
-  
-int *root;  
-  
-  
-bool compare(CEdge a,CEdge b)  
-{  
-    return  a.weight < b.weight;//ÉýÐò..  
-}  
-  
-int Find(int x)  
-{  
-    return root[x];  
-}  
-  
-void Union(int a,int b,int V)  
-{  
-    int root_a = Find(a);  
-    int root_b = Find(b);  
-    if(root_a != root_b)  
-    {  
-        root[b] = root_a;  
-        for(int i = 1 ; i <= V;i++)  
-            if(root[i] == root_b)  
-                root[i] = root_a;  
-    }  
-}  
-  
-void Kruskal(int V,int E,CEdge *e)  
-{  
-    for(int i = 1 ; i <= V;i++)  
-        root[i] = i;  
-  
-    //order by weight in edge  
-    sort(e,e+E,compare);  
-  
-    for(int i = 0 ; i < E;i++)  
-        if(Find(e[i].u) != Find(e[i].v))  
-        {  
-            cout<<e[i].u<<"---"<<e[i].v<<" ";  
-            Union(e[i].u,e[i].v,V);  
-        }  
-    cout<<endl;  
-}  
-\end{lstlisting}
+\lstinputlisting{../code/kruskal.cpp}
 
 \subsection{Dijkstra}
 \begin{lstlisting}
