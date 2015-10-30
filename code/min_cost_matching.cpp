@@ -75,15 +75,15 @@ double MinCostMatching(const vector<vector<double>> &cost,
 			for (int k = 0; k < n; k++) {
 				if (visited[k]) continue;
 				if (j == -1 || distance[k] < distance[j]) j = k;
-						}
-						visited[j] = 1;
+			}
+			visited[j] = 1;
 						
-						// termination condition
-						if (Rmate[j] == -1) break;
+			// termination condition
+			if (Rmate[j] == -1) break;
 						
-						// relax neighbors
-						const int i = Rmate[j];
-						for (int k = 0; k < n; k++) {
+			// relax neighbors
+			const int i = Rmate[j];
+			for (int k = 0; k < n; k++) {
 				if (visited[k]) continue;
 				const double new_dist = distance[j] + cost[i][k] - u[i] - v[k];
 				if (distance[k] > new_dist) {

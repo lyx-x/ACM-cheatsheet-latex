@@ -9,9 +9,9 @@ void bfs(){
            {
                if(!a[v]&&cap[u][v]-flow[u][v]>0)
                {
-                   p[v]=u;
-                   a[v]= (cap[u][v]-flow[u][v]) < a[u] ?  (cap[u][v]-flow[u][v]) : a[u];
-                   q.push(v);
+                  p[v]=u;
+                  a[v]=(cap[u][v]-flow[u][v])<a[u] ? (cap[u][v]-flow[u][v]):a[u];
+                  q.push(v);
                }
            }
        }
@@ -26,10 +26,10 @@ void EdmondsKarp()
    for(;;)
    {
        bfs();
-       //没有增广路,算法结束,打印最小割
+       //if there is no augmenting path, print the min cut
        if(!a[t])
        {
-           cout<<"\n\n最小割集S:";
+           cout<<"\n\n min cuts S:";
            for(int i=0;i<n;++i)
            {
                if(a[i])
@@ -37,7 +37,7 @@ void EdmondsKarp()
                    cout<<i<<",";
                }
            }
-           cout<<"\n最小割集T:";
+           cout<<"\n min cut T:";
            for(int j=0;j<n;++j)
            {
                if(!a[j])
@@ -45,7 +45,7 @@ void EdmondsKarp()
                    cout<<j<<",";
                }
            }
-           cout<<"\n最大流:"<<f<<endl;
+           cout<<"\n max flow:"<<f<<endl;
            break;
        }
        for(int u=t;u!=s;u=p[u])
@@ -53,7 +53,7 @@ void EdmondsKarp()
            flow[p[u]][u]+=a[t];
            flow[u][p[u]]-=a[t];
        }
-       //这条增广路给最大流增加了:
+       //maxflow increase through the augmenting path:
        f+=a[t];
    }
 }
