@@ -44,10 +44,7 @@ void Kruskal(int V,int E,edge_t *e)
     sort(e,e+E,compare);  
   
     for(int i = 0 ; i < E;i++)  
-        if(Find(e[i].u) != Find(e[i].v))  
-        {  
-            cout<<e[i].u<<"---"<<e[i].v<<" ";  
-            Union(e[i].u,e[i].v,V);  
-        }  
-    cout<<endl;  
+	//if e[i].u and e[i].v belong to different groups,then add e[i] to the tree
+        if(Find(e[i].u) != Find(e[i].v))
+            Union(e[i].u,e[i].v,V);    
 }  

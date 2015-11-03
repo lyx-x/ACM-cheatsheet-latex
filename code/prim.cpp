@@ -7,10 +7,10 @@ void prime(){
     int total_cost = 0;
     for (int i=1;i<n;i++){
         next_vertex=1;
-        int min_cost;
+        int min_cost = 0;
         //find next vertex to be added
         for (int j=0;j<n;j++){
-            if (!added[j] && distance_to_tree[j]<distance_to_tree[min]){
+            if (!added[j] && distance_to_tree[j]<distance_to_tree[next_vertex]){
                 next_vertex=j;
                 min_cost = distance_to_tree[j];
             }
