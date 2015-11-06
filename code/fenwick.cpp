@@ -5,7 +5,7 @@ using namespace std;
 
 int tree[(1 << LOGSZ) + 1]; // BIT array
 int N = (1 << LOGSZ);
-
+//tree start with index 1
 // add v to value at x, update BIT array
 void set(int x, int v) {
 	while(x <= N) {
