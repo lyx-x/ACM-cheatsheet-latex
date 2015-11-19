@@ -45,12 +45,14 @@ void setConvexHull(vector <point> p, vector <point> &h) {
 
 	for (int i = 1; i < (int) p.size(); i++) {
 		if (i == (int) p.size() - 1 || !isCCW(tail, head, p[i])) {
-			while ( (int) up.size() >= 2 && isCCW(up[up.size() - 2], up.back(), p[i]) )
+			while ( (int) up.size() >= 2 && 
+				isCCW(up[up.size() - 2], up.back(), p[i]) )
 				up.pop_back();
 			up.push_back(p[i]);
 		}
 		if (i == (int) p.size() - 1 || isCCW(tail, head, p[i])) {
-			while ( (int) down.size() >= 2 && !isCCW(down[down.size() - 2], down.back(), p[i]) )
+			while ( (int) down.size() >= 2 && 
+				!isCCW(down[down.size() - 2], down.back(), p[i]) )
 				down.pop_back();
 			down.push_back(p[i]);
 		}
