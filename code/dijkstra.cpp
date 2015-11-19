@@ -1,9 +1,7 @@
 //vs start point, prev[]:previous point, dist[] distance minimum
 void dijkstra(int vs, int prev[], int dist[])
 {
-    int i,j,k;
-    int min;
-    int tmp;
+    int i,j,k,min,temp;
     bool flag[MAX];      // flag[i]=true:already treated
 
     for (i = 0; i < VexNum; i++)

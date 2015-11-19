@@ -18,5 +18,6 @@ int getSum(int x, int y) {
 }
 
 int getSum(int xFrom, int xTo, int yFrom, int yTo) {
-	return getSum(xTo, yTo) - getSum(xTo, yFrom - 1) - getSum(xFrom - 1, yTo) + getSum(xFrom - 1, yFrom - 1);
+	return getSum(xTo, yTo) - getSum(xTo, yFrom - 1) - 
+	getSum(xFrom - 1, yTo) + getSum(xFrom - 1, yFrom - 1);
 }

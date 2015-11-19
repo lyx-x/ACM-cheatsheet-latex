@@ -1,20 +1,17 @@
 for (int i = 0; i < N; i++)  
     id[i] = i;
-
 for (int i = 0; i < N; i++)  
     sz[i] = 1;
 
 int find(int p)  
 {  
     while (p != id[p])  
-    {  
-        //set the father of p as its grandfather  
+    {  //set the father of p as its grandfather  
         id[p] = id[id[p]];  
         p = id[p];  
     }  
     return p;  
 }  
-
 void union(int p, int q)  
 {  
     int i = find(p);  

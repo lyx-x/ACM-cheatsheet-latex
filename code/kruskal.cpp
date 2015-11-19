@@ -7,21 +7,16 @@ struct edge_t
     edge(){}  
     edge_t(int u,int v,int w):u(u),v(v),weight(w){}  
 };  
-  
-  
 int *root;  
-  
   
 bool compare(edge_t a,edge_t b)  
 {  
-    return  a.weight < b.weight;//ÉýÐò..  
+    return  a.weight < b.weight;
 }  
-  
 int Find(int x)  
 {  
     return root[x];  
 }  
-  
 void Union(int a,int b,int V)  
 {  
     int root_a = Find(a);  
@@ -34,7 +29,6 @@ void Union(int a,int b,int V)
                 root[i] = root_a;  
     }  
 }  
-  
 void Kruskal(int V,int E,edge_t *e)  
 {  
     for(int i = 1 ; i <= V;i++)  
