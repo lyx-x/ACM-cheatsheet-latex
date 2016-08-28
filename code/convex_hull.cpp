@@ -1,81 +1,82 @@
-/* Compute the 2D convex hull of a set of points using the monotone chain
- * algorithm. Eliminate redundant points from the hull if REMOVE_REDUNDANT 
- * is #defined.
- *
- * Running time: O(n log n)
- *
- * INPUT: a vector of input points, unordered.
- * OUTPUT: a vector of points in the convex hull, counterclockwise, 
- *			starting with bottommost/leftmost point */
-
+#include <iostream>
+#include <cstdlib>
 #include <cstdio>
-#include <cassert>
 #include <vector>
 #include <algorithm>
 #include <cmath>
 
 using namespace std;
 
-#define REMOVE_REDUNDANT
+#define sqr(x) ((x) * (x))
 
-const double EPS = 1e-7;
+const double pi = acos(-1.0);
 
-struct point_t { 
-	double x, y; 
-	point_t() {} 
-	point_t(double x, double y) : x(x), y(y) {}
-	bool operator< (const point_t &rhs) const { 
-		return make_pair(y, x) < make_pair(rhs.y, rhs.x); 
-	}
-	bool operator== (const point_t &rhs) const { 
-		return make_pair(y, x) == make_pair(rhs.y, rhs.x); 
-	}
+struct point {
+	double x, y;
 };
 
-double cross(point_t p, point_t q) { return p.x * q.y - p.y * q.x; }
-double area2(point_t a, point_t b, point_t c) { 
-	return cross(a, b) + cross(b, c) + cross(c, a); 
+int n;
+vector <point> p, hull;
+double ans;
+
+//comperator of point
+bool cmp(point a, point b) {
+	return (a.x < b.x || (a.x == b.x && a.y < b.y));
 }
 
-#ifdef REMOVE_REDUNDANT
-bool between(const point_t &a, const point_t &b, const point_t &c) {
-	return (fabs(area2(a, b, c)) < EPS && (a.x - b.x) * (c.x - b.x) <= 0 
-			&& (a.y - b.y) * (c.y - b.y) <= 0);
+bool eq(point a, point b) {
+	return (a.x == b.x && a.y == b.y);
 }
-#endif
 
-void convex_hull(vector<point_t> &pts) {
-	sort(pts.begin(), pts.end());
-	pts.erase(unique(pts.begin(), pts.end()), pts.end());
-	vector<point_t> up, dn;
-	for (int i = 0; i < pts.size(); i++) {
-		while (up.size() > 1 && 
-				area2(up[up.size() - 2], up.back(), pts[i]) >= 0) 
-			up.pop_back();
-		while (dn.size() > 1 && 
-				area2(dn[dn.size() - 2], dn.back(), pts[i]) <= 0) 
-			dn.pop_back();
-		up.push_back(pts[i]);
-		dn.push_back(pts[i]);
+//is counter clockwise
+bool isCCW(point a, point b, point c) {
+	return a.x * (b.y - c.y) + b.x * (c.y - a.y) + c.x * (a.y - b.y) > 0;
+}
+
+void setConvexHull(vector <point> p, vector <point> &h) {
+	//sort by x
+	sort(p.begin(), p.end(), cmp);
+	p.erase(unique(p.begin(), p.end(), eq), p.end());
+
+	vector <point> up, down;
+	point head = p[0], tail = p.back();
+
+	up.push_back(head); down.push_back(head);
+
+	for (int i = 1; i < (int) p.size(); i++) {
+		if (i == (int) p.size() - 1 || !isCCW(tail, head, p[i])) {
+			while ( (int) up.size() >= 2 && 
+				isCCW(up[up.size() - 2], up.back(), p[i]) )
+				up.pop_back();
+			up.push_back(p[i]);
+		}
+		if (i == (int) p.size() - 1 || isCCW(tail, head, p[i])) {
+			while ( (int) down.size() >= 2 && 
+				!isCCW(down[down.size() - 2], down.back(), p[i]) )
+				down.pop_back();
+			down.push_back(p[i]);
+		}
 	}
-	pts = dn;
-	for (int i = (int)up.size() - 2; i >= 1; i--) 
-		pts.push_back(up[i]);
-	
-#ifdef REMOVE_REDUNDANT
-	if (pts.size() <= 2) return;
-	dn.clear();
-	dn.push_back(pts[0]);
-	dn.push_back(pts[1]);
-	for (int i = 2; i < pts.size(); i++) {
-		if (between(dn[dn.size() - 2], dn[dn.size()-1], pts[i])) 
-			dn.pop_back();
-		dn.push_back(pts[i]);
-	}
-	if (dn.size() >= 3 && between(dn.back(), dn[0], dn[1])) {
-		dn[0] = dn.back();
-		dn.pop_back();
-	}
-	pts = dn;
-#endif
+
+	h.clear();
+	for (int i = 0; i < (int) up.size(); i++)
+		h.push_back(up[i]);
+	for (int i = (int) down.size() - 2; i > 0; i--)
+		h.push_back(down[i]);
+
+}
+
+//calculate the distance
+double dist(point a, point b) {
+	return sqrt(sqr(a.x - b.x) + sqr(a.y - b.y));
+}
+
+double getPerimeter(vector <point> p) {
+	double per = 0;
+
+	for (int i = 1; i < (int) p.size(); i++)
+		per += dist(p[i - 1], p[i]);
+	per += dist(p.back(), p[0]);
+
+	return per;
 }

@@ -7,8 +7,7 @@ void dijkstra(int vs, int prev[], int dist[])
     bool flag[MAX];      // flag[i]=true:already treated
 
     for (i = 0; i < VexNum; i++)
-    {
-        flag[i] = false;            
+    {	flag[i] = false;            
         prev[i] = 0;         
         dist[i] = graph[vs][i];
     }
@@ -17,8 +16,7 @@ void dijkstra(int vs, int prev[], int dist[])
     dist[vs] = 0;
 
     for (i = 1; i < VexNum; i++)
-    {
-        //find the nearest point of the start among all points non-visited
+    {	//find the nearest point of the start among all points non-visited
         min = INF;
         for (j = 0; j < mVexNum; j++)
         {
